@@ -37,6 +37,8 @@ public class PatientResgisterServlet extends HttpServlet {
 		
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		datastore.put(patient);
-		resp.getWriter().print("Register of the patient was sucess!\r\n");
+		resp.getWriter().write(datastore.put(patient).toString());
+		resp.getWriter().write("Register of the patient was sucess!\r\n");
+	
 	}
 }

@@ -21,15 +21,14 @@ public class AllPatientsServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String id = req.getParameter("id");
-		DatastoreService datastoreService =
-		DatastoreServiceFactory.getDatastoreService();
-		Key k2 = KeyFactory.createKey("Postagem", id);
-		Entity postagens = null;
+		DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+		Key k2 = KeyFactory.createKey("Patient", id);
+		Entity pa = null;
 		try {
-		postagens = datastoreService.get(k2);
+		pa = datastoreService.get(k2);
 		} catch (EntityNotFoundException e) {
 		throw new ServletException(e);
 		}
-		resp.getWriter().write(postagens.getProperty("Titulo").toString());
+		resp.getWriter().write(pa.getProperty("Titulo").toString());
 	}
 }
