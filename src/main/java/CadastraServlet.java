@@ -43,48 +43,32 @@ public class CadastraServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		/*response.setContentType("text/plain");
-		response.setCharacterEncoding("UTF-8");
-		
-		String post = request.getParameter("postagem");
-		Entity postagem = new Entity("Postagem");
-		postagem.setProperty("Titulo",post);
-		postagem.setProperty("hireDate", new Date());
-		postagem.setProperty("IP", request.getRemoteAddr());
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		datastore.put(postagem); 
-		response.getWriter().print("Postagem realizada com sucesso!\r\n");*/
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		NamespaceManager.set("ClienteX"); 
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
+		
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Transaction txn = (Transaction) datastore.beginTransaction();
 		
-		try 
-		{
+		try {
 			String post = request.getParameter("postagem");
 			String id = request.getParameter("id");
+			
 			Entity postagem = new Entity("Postagem",id);
 			postagem.setProperty("Titulo",post);
 			postagem.setProperty("hireDate", new Date());
 			postagem.setProperty("IP", request.getRemoteAddr());
+			
 			datastore.put(postagem);
+			
 			((com.google.appengine.api.datastore.Transaction) txn).commit();
 			response.getWriter().print("Postagem realizada com sucesso!\r\n");
-		}
-		finally 
-		{
-			if (((com.google.appengine.api.datastore.Transaction) txn).isActive())
-			{
+		} finally {
+			if (((com.google.appengine.api.datastore.Transaction) txn).isActive()) {
 				((com.google.appengine.api.datastore.Transaction) txn).rollback();
 				response.getWriter().print("Postagem nao realizada com sucesso!\r\n");
 			}
-		}
-		
+		}		
 	}
-
 }

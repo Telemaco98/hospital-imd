@@ -26,14 +26,14 @@ public class RecuperaServlet extends HttpServlet {
 		NamespaceManager.set("ClienteX");
 		DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
 
-		Query q = new Query("Postagem"); 
+		Query q = new Query("Patient"); 
 		PreparedQuery pq = datastoreService.prepare(q);  
 		
 		int count = 1;
 		
 		for (Entity result : pq.asIterable()) {   
-		    String titulo = (String) result.getProperty("Titulo");   
-			response.getWriter().write("Postagem " + count + ": " + titulo + "<br>");
+		    String titulo = (String) result.getProperty("Name");   
+			response.getWriter().write("Patient " + count + ": " + titulo + "<br>");
 		    count++;
 		}
 	}
